@@ -553,6 +553,103 @@ body:hover .cursor-glow {
     margin: 0 auto;
 }
 
+.pain-points {
+    background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    position: relative;
+}
+
+.pain-points::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+    opacity: 0.3;
+}
+
+.pain-points .section-tag {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--accent-red);
+}
+
+.pain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.pain-card {
+    padding: 2.5rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 16px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.pain-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+}
+
+.pain-card:hover {
+    transform: translateY(-8px);
+    background: var(--bg-card-hover);
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15);
+}
+
+.pain-card:hover::before {
+    transform: scaleX(1);
+}
+
+.pain-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.pain-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.pain-card p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.pain-cta {
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.pain-cta p {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.pain-arrow {
+    font-size: 2rem;
+    color: var(--primary-cyan);
+    animation: bounce 2s infinite;
+}
+
 .features {
     background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
 }
@@ -1161,6 +1258,10 @@ body:hover .cursor-glow {
     }
     
     .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pain-grid {
         grid-template-columns: 1fr;
     }
     
