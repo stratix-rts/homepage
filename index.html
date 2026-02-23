@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stratix 星策 - 一人成军，万智听命</title>
+    <meta name="description" content="基于 RTS 游戏化界面的多 Agent 可视化指挥平台。像指挥官一样指挥你的 AI 军团。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cursor-glow"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⬡</span>
+                <span class="logo-text">STRATIX</span>
+                <span class="logo-sub">星策</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">特性</a>
+                <a href="#demo">演示</a>
+                <a href="#architecture">架构</a>
+                <a href="https://github.com" class="btn-nav" target="_blank">
+                    <span>GitHub</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <canvas id="particleCanvas"></canvas>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                <span>MVP 预览版</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">
+                    <span class="gradient-text">一人成军</span>
+                </span>
+                <span class="title-line">
+                    <span class="gradient-text">万智听命</span>
+                </span>
+            </h1>
+            <p class="hero-subtitle">
+                基于 <span class="highlight">RTS 游戏化界面</span> 的多 Agent 可视化指挥平台<br>
+                像真正的<span class="highlight">指挥官</span>一样掌控你的 <span class="highlight">AI 军团</span>
+            </p>
+            <div class="hero-cta">
+                <a href="https://discord.gg/3NysCNbe" class="btn-primary" target="_blank">
+                    <span>加入 Discord</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                </a>
+                <button class="btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <span>观看演示</span>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value" data-target="10">0</span>
+                    <span class="stat-label">预置 Agent 模板</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value" data-target="50">0</span>
+                    <span class="stat-label">毫秒指令响应</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value" data-target="∞">∞</span>
+                    <span class="stat-label">Agent 并发数</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="rts-preview">
+                <div class="rts-header">
+                    <span class="rts-title">⬡ 星策指挥中心</span>
+                    <div class="rts-status">
+                        <span class="status-dot online"></span>
+                        <span>在线</span>
+                    </div>
+                </div>
+                <div class="rts-canvas">
+                    <div class="grid-overlay"></div>
+                    <div class="agent agent-1" data-agent="开发战士">
+                        <div class="agent-avatar">⚡</div>
+                        <div class="agent-name">DEV-Alpha</div>
+                        <div class="agent-status active">执行中</div>
+                    </div>
+                    <div class="agent agent-2" data-agent="文案刺客">
+                        <div class="agent-avatar">✦</div>
+                        <div class="agent-name">COPY-Beta</div>
+                        <div class="agent-status idle">待命</div>
+                    </div>
+                    <div class="agent agent-3" data-agent="数据法师">
+                        <div class="agent-avatar">◈</div>
+                        <div class="agent-name">DATA-Gamma</div>
+                        <div class="agent-status active">执行中</div>
+                    </div>
+                    <div class="selection-box"></div>
+                </div>
+                <div class="rts-panel">
+                    <div class="panel-section">
+                        <span class="panel-label">选中单位:</span>
+                        <span class="panel-value">3 个 Agent</span>
+                    </div>
+                    <div class="panel-section">
+                        <span class="panel-label">指令队列:</span>
+                        <span class="panel-value">7 条待执行</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">核心特性</span>
+                <h2 class="section-title">重新定义 <span class="gradient-text">AI 军团管理</span></h2>
+                <p class="section-desc">将复杂的多 Agent 管理，转化为直观的 RTS 游戏化操作</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="20" stroke="url(#grad1)" stroke-width="2"/>
+                            <path d="M24 14v10l7 7" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00d9ff"/>
+                                    <stop offset="100%" style="stop-color:#0066ff"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>实时指挥</h3>
+                    <p>毫秒级指令响应，WebSocket 实时同步 Agent 状态，战场态势一目了然</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="8" y="8" width="32" height="32" rx="4" stroke="url(#grad2)" stroke-width="2"/>
+                            <circle cx="18" cy="18" r="4" fill="url(#grad2)"/>
+                            <circle cx="30" cy="18" r="4" fill="url(#grad2)"/>
+                            <circle cx="18" cy="30" r="4" fill="url(#grad2)"/>
+                            <circle cx="30" cy="30" r="4" fill="url(#grad2)"/>
+                            <defs>
+                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#a855f7"/>
+                                    <stop offset="100%" style="stop-color:#6366f1"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>框选编队</h3>
+                    <p>支持单击、框选、编队操作，批量下发指令，高效管理大规模 Agent 集群</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2 6-12z" stroke="url(#grad3)" stroke-width="2" fill="none"/>
+                            <defs>
+                                <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f59e0b"/>
+                                    <stop offset="100%" style="stop-color:#ef4444"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>英雄设计器</h3>
+                    <p>可视化配置 Agent 技能、记忆、模型参数，无需编写配置文件，所见即所得</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4v8M24 36v8M4 24h8M36 24h8" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="24" r="12" stroke="url(#grad4)" stroke-width="2"/>
+                            <circle cx="24" cy="24" r="4" fill="url(#grad4)"/>
+                            <defs>
+                                <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#10b981"/>
+                                    <stop offset="100%" style="stop-color:#06b6d4"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>星策网关</h3>
+                    <p>统一对接 OpenClaw 实例，支持本地/远程混合部署，灵活扩展</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="6" y="14" width="36" height="24" rx="2" stroke="url(#grad5)" stroke-width="2"/>
+                            <path d="M12 8h24M16 20h16M16 26h10" stroke="url(#grad5)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ec4899"/>
+                                    <stop offset="100%" style="stop-color:#8b5cf6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>模板生态</h3>
+                    <p>丰富的 Agent 模板库，一键导入开发、文案、数据分析等专业 Agent</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M8 24c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="url(#grad6)" stroke-width="2"/>
+                            <path d="M12 24c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="url(#grad6)" stroke-width="2"/>
+                            <circle cx="24" cy="24" r="4" fill="url(#grad6)"/>
+                            <defs>
+                                <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#06b6d4"/>
+                                    <stop offset="100%" style="stop-color:#3b82f6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>开源开放</h3>
+                    <p>基于 Phaser + OpenClaw，完全开源，社区驱动，欢迎贡献代码</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="showcase" id="demo">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">游戏化体验</span>
+                <h2 class="section-title">不只是管理，更是 <span class="gradient-text">指挥艺术</span></h2>
+            </div>
+            <div class="showcase-content">
+                <div class="showcase-tabs">
+                    <button class="tab-btn active" data-tab="rts">
+                        <span class="tab-icon">🎮</span>
+                        <span>RTS 界面</span>
+                    </button>
+                    <button class="tab-btn" data-tab="designer">
+                        <span class="tab-icon">🦸</span>
+                        <span>英雄设计器</span>
+                    </button>
+                    <button class="tab-btn" data-tab="gateway">
+                        <span class="tab-icon">🌐</span>
+                        <span>星策网关</span>
+                    </button>
+                </div>
+                <div class="showcase-display">
+                    <div class="tab-content active" data-content="rts">
+                        <div class="mockup-window">
+                            <div class="window-header">
+                                <div class="window-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="window-title">Stratix RTS 指挥中心</span>
+                            </div>
+                            <div class="window-content">
+                                <div class="mock-rts-interface">
+                                    <div class="mock-toolbar">
+                                        <span>⬡ 选择</span>
+                                        <span>⚔ 攻击</span>
+                                        <span>🛡 防御</span>
+                                        <span>📍 移动</span>
+                                    </div>
+                                    <div class="mock-map">
+                                        <div class="mock-grid"></div>
+                                        <div class="mock-agents">
+                                            <div class="mock-agent" style="top: 30%; left: 25%;">
+                                                <span class="mock-avatar">⚡</span>
+                                            </div>
+                                            <div class="mock-agent" style="top: 50%; left: 60%;">
+                                                <span class="mock-avatar">✦</span>
+                                            </div>
+                                            <div class="mock-agent" style="top: 70%; left: 40%;">
+                                                <span class="mock-avatar">◈</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" data-content="designer">
+                        <div class="mockup-window">
+                            <div class="window-header">
+                                <div class="window-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="window-title">星策·英雄设计器</span>
+                            </div>
+                            <div class="window-content">
+                                <div class="mock-designer">
+                                    <div class="designer-sidebar">
+                                        <div class="designer-item active">⚡ Soul 配置</div>
+                                        <div class="designer-item">🧠 记忆系统</div>
+                                        <div class="designer-item">⚔ 技能树</div>
+                                        <div class="designer-item">🎛 模型参数</div>
+                                    </div>
+                                    <div class="designer-main">
+                                        <div class="form-group">
+                                            <label>英雄名称</label>
+                                            <input type="text" value="DEV-Alpha" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>角色定位</label>
+                                            <select>
+                                                <option>开发战士</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>系统提示词</label>
+                                            <textarea readonly>你是一名专业的全栈开发工程师...</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" data-content="gateway">
+                        <div class="mockup-window">
+                            <div class="window-header">
+                                <div class="window-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="window-title">Stratix Gateway 控制台</span>
+                            </div>
+                            <div class="window-content">
+                                <div class="mock-terminal">
+                                    <div class="terminal-line">
+                                        <span class="prompt">$</span>
+                                        <span class="command">stratix gateway start</span>
+                                    </div>
+                                    <div class="terminal-output">
+                                        <span class="success">✓</span> 星策网关启动成功
+                                    </div>
+                                    <div class="terminal-output">
+                                        <span class="info">→</span> 监听端口: 8080
+                                    </div>
+                                    <div class="terminal-output">
+                                        <span class="info">→</span> OpenClaw 实例: 3 个已连接
+                                    </div>
+                                    <div class="terminal-output">
+                                        <span class="info">→</span> Agent 总数: 12 个在线
+                                    </div>
+                                    <div class="terminal-line">
+                                        <span class="prompt">$</span>
+                                        <span class="cursor">_</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="architecture" id="architecture">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">技术架构</span>
+                <h2 class="section-title">高度模块化，<span class="gradient-text">无缝拼接</span></h2>
+            </div>
+            <div class="arch-diagram">
+                <div class="arch-layer layer-frontend">
+                    <div class="layer-title">前端层</div>
+                    <div class="layer-items">
+                        <div class="arch-item">
+                            <span class="item-icon">🎮</span>
+                            <span>RTS 界面</span>
+                            <span class="item-tech">Phaser 3</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="item-icon">🦸</span>
+                            <span>英雄设计器</span>
+                            <span class="item-tech">Vue 3</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer layer-middleware">
+                    <div class="layer-title">中间件层</div>
+                    <div class="layer-items">
+                        <div class="arch-item featured">
+                            <span class="item-icon">🌐</span>
+                            <span>星策网关</span>
+                            <span class="item-tech">Node.js + WebSocket</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer layer-backend">
+                    <div class="layer-title">Agent 层</div>
+                    <div class="layer-items">
+                        <div class="arch-item">
+                            <span class="item-icon">🤖</span>
+                            <span>OpenClaw 实例</span>
+                            <span class="item-tech">本地 / 远程</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="section-container">
+            <div class="cta-content">
+                <h2>准备好指挥你的 AI 军团了吗？</h2>
+                <p>加入星策，体验游戏化的 AI 管理方式</p>
+                <div class="cta-buttons">
+                    <button class="btn-primary large">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <span>GitHub 开源</span>
+                    </button>
+                    <button class="btn-secondary large">
+                        <span>查看文档</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">⬡</span>
+                        <span class="logo-text">STRATIX</span>
+                        <span class="logo-sub">星策</span>
+                    </div>
+                    <p>一人成军，万智听命</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>产品</h4>
+                        <a href="#">功能特性</a>
+                        <a href="#">更新日志</a>
+                        <a href="#">路线图</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>开发</h4>
+                        <a href="#">文档中心</a>
+                        <a href="#">API 参考</a>
+                        <a href="#">贡献指南</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>社区</h4>
+                        <a href="#">Discord</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">博客</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Stratix 星策. 基于 Phaser + OpenClaw 构建</p>
+                <p class="footer-slogan">Made with ⚡ for AI Commanders</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
