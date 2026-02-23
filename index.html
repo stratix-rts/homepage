@@ -32,6 +32,93 @@
                 </a>
             </div>
         </div>
+    </nav>
+
+    <section class="hero">
+        <canvas id="particleCanvas"></canvas>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse"></span>
+                    <span>MVP 预览版</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line">
+                        <span class="gradient-text">一人成军</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="gradient-text">万智听命</span>
+                    </span>
+                </h1>
+                <p class="hero-subtitle">
+                    基于 <span class="highlight">RTS 游戏化界面</span> 的多 Agent 可视化指挥平台<br>
+                    像真正的<span class="highlight">指挥官</span>一样掌控你的 <span class="highlight">AI 军团</span>
+                </p>
+                <div class="hero-cta">
+                    <a href="https://discord.gg/3NysCNbe" class="btn-primary" target="_blank">
+                        <span>加入 Discord</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value" data-target="10">0</span>
+                        <span class="stat-label">预置 Agent 模板</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value" data-target="50">0</span>
+                        <span class="stat-label">毫秒指令响应</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value" data-target="∞">∞</span>
+                        <span class="stat-label">Agent 并发数</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="rts-preview">
+                    <div class="rts-header">
+                        <span class="rts-title">⬡ 星策指挥中心</span>
+                        <div class="rts-status">
+                            <span class="status-dot online"></span>
+                            <span>在线</span>
+                        </div>
+                    </div>
+                    <div class="rts-canvas">
+                        <div class="grid-overlay"></div>
+                        <div class="agent agent-1" data-agent="开发战士">
+                            <div class="agent-avatar">⚡</div>
+                            <div class="agent-name">DEV-Alpha</div>
+                            <div class="agent-status active">执行中</div>
+                        </div>
+                        <div class="agent agent-2" data-agent="文案刺客">
+                            <div class="agent-avatar">✦</div>
+                            <div class="agent-name">COPY-Beta</div>
+                            <div class="agent-status idle">待命</div>
+                        </div>
+                        <div class="agent agent-3" data-agent="数据法师">
+                            <div class="agent-avatar">◈</div>
+                            <div class="agent-name">DATA-Gamma</div>
+                            <div class="agent-status active">执行中</div>
+                        </div>
+                        <div class="selection-box"></div>
+                    </div>
+                    <div class="rts-panel">
+                        <div class="panel-section">
+                            <span class="panel-label">选中单位:</span>
+                            <span class="panel-value">3 个 Agent</span>
+                        </div>
+                        <div class="panel-section">
+                            <span class="panel-label">指令队列:</span>
+                            <span class="panel-value">7 条待执行</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
