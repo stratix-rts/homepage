@@ -616,8 +616,14 @@ body:hover .cursor-glow {
 }
 
 .pain-icon {
-    font-size: 3rem;
+    width: 64px;
+    height: 64px;
     margin-bottom: 1rem;
+}
+
+.pain-icon svg {
+    width: 100%;
+    height: 100%;
 }
 
 .pain-card h3 {
